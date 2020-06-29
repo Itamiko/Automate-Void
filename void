@@ -1,0 +1,15 @@
+#!/bin/sh
+source ./logger
+
+INFO "creating package list"
+
+# getting the package list and parsing the list
+PACKAGES=""
+xbps-query -Rx base-system | while IFS= read -r line
+do
+	PACKAGES="$PACKAGES $line"
+done
+# strip '>=0' from packages variable
+PACKAGES=$(echo $PACKAGES | sed "s/>=0//gm")
+
+SUCCESS "current package list to install\n$PACKAGES"
